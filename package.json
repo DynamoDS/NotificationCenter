@@ -1,5 +1,5 @@
 {
-  "name": "notifications-center",
+  "name": "@dynamods/notifications-center",
   "version": "1.0.0",
   "description": "Notification center maintained by Dynamo Team@Autodesk",
   "author": "Autodesk Inc.",
@@ -7,7 +7,7 @@
   "homepage": "https://github.com/DynamoDS/NotificationCenter.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DynamoDS/NotificationCenter.git"
+    "url": "git+https://github.com/DynamoDS/NotificationCenter.git"
   },
   "publishConfig": {
     "access": "public"
@@ -18,7 +18,7 @@
     "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
-  "dependencies": {    
+  "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -40,5 +40,8 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3",
     "webpack-merge": "^5.8.0"
+  },
+  "bugs": {
+    "url": "https://github.com/DynamoDS/NotificationCenter/issues"
   }
 }
