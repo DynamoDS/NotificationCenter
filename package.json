@@ -1,15 +1,23 @@
 {
-  "name": "notifications_ui",
+  "name": "notifications-center",
   "version": "1.0.0",
-  "description": "",
+  "description": "Notification center maintained by Dynamo Team@Autodesk",
+  "author": "Autodesk Inc.",
+  "license": "MIT",
+  "homepage": "https://github.com/DynamoDS/NotificationCenter.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DynamoDS/NotificationCenter.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "index.js",
   "scripts": {
     "start": "webpack serve",
     "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {    
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
