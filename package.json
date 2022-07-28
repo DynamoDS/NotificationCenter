@@ -40,8 +40,6 @@
     "webpack-dev-server": "^4.9.3",
     "webpack-merge": "^5.8.0",
     "@hig/notifications-flyout": "^3.2.0",
-    "@hig/theme-context": "^4.3.0",
-    "@hig/theme-data": "^3.0.0",
     "@hig/timestamp": "^2.1.0"
   },
   "bugs": {
