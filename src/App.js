@@ -21,7 +21,6 @@ function App() {
 							  featured: true,
 							  unread: true,
 							  message: APIData[i].title,
-							  href: APIData[i].linkTitle,
 							  timestamp: <Timestamp timestamp= {APIData[i].created} />,
 							  content: <div>
 											<a style={{marginRight:'15px', marginTop:'-2px'}}><img width="20" src={APIData[i].thumbnail}/></a>
