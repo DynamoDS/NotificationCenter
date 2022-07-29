@@ -29,7 +29,7 @@ For development, you will only need Node.js and a node global package, installed
 
   You can find more information about the installation on the [official Node.js website](https://nodejs.org/) and the [official NPM website](https://npmjs.org/).
 
-If the installation was successful, you should be able to run the following command.
+If the installation was successful, you should be able to run the following command (version outputs are just examples).
 
     $ node --version
     v16.16.0
@@ -37,7 +37,7 @@ If the installation was successful, you should be able to run the following comm
     $ npm --version
     8.15.0
 
-If you need to update `npm`, you can make it using `npm`! Cool right? After running the following command, just open again the command line and be happy.
+If you need to update `npm`, you can make it using `npm`!
 
     npm install npm -g
 
@@ -52,6 +52,10 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 ## Running the project
 
     npm run start
+
+## Simple build for development
+
+    npm run build
 
 ## Simple build for production
 

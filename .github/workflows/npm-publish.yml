@@ -4,7 +4,8 @@
 name: Publish
 
 on:
-  workflow_dispatch:
+  # uncomment the following if you need to debug manual trigger
+  # workflow_dispatch:
   release:
     types: [created]
 
@@ -32,9 +33,13 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci --force
       - run: npm run production --if-present
+        env:
+          # Set environment to production just in case
+          NODE_ENV: production
       - name: The final publish step within dist folder
         working-directory: dist
       # This will publish the package and set access to public as if you had run npm access public after publishing.
         run: npm publish --access public
         env:
+          # Get npm token from Github
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
