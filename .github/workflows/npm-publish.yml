@@ -5,7 +5,7 @@ name: Node.js Publish Package
 
 on:
   # uncomment the following if you need to debug manual trigger
-  workflow_dispatch:
+  # workflow_dispatch:
   release:
     types: [created]
 
