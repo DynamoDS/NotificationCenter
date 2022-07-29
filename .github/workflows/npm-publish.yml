@@ -9,6 +9,7 @@ on:
     types: [created]
 
 jobs:
+  # Build dev first
   build:
     runs-on: ubuntu-latest
     steps:
@@ -17,8 +18,9 @@ jobs:
         with:
           node-version: 16
       - run: npm ci --force
-      - run: npm run production --if-present
+      - run: npm run build --if-present
 
+  # Build prod bundle and publish publicly
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
@@ -29,7 +31,7 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci --force
-      - run: ls
+      - run: npm run production --if-present
       - name: The final publish step within dist folder
         working-directory: dist
       # This will publish the package and set access to public as if you had run npm access public after publishing.
