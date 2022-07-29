@@ -32,9 +32,16 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci --force
       - run: npm run production --if-present
+        env:
+          # Set environment to production
+          NODE_ENV: production
+      - name: List all files in dist folder
+        working-directory: dist
+        run: ls
       - name: The final publish step within dist folder
         working-directory: dist
       # This will publish the package and set access to public as if you had run npm access public after publishing.
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          # Get npm token from Github
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}},
