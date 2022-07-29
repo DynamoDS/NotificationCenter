@@ -4,7 +4,8 @@
 name: Node.js Publish Package
 
 on:
-  workflow_dispatch:
+  # uncomment the following if you need to debug manual trigger
+  # workflow_dispatch:
   release:
     types: [created]
 
@@ -33,7 +34,7 @@ jobs:
       - run: npm ci --force
       - run: npm run production --if-present
         env:
-          # Set environment to production
+          # Set environment to production just in case
           NODE_ENV: production
       - name: List all files in dist folder
         working-directory: dist
