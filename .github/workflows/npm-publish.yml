@@ -35,6 +35,7 @@ jobs:
       - name: The final publish step within dist folder
         working-directory: dist
       # This will publish the package and set access to public as if you had run npm access public after publishing.
+        run: ls
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
