@@ -29,7 +29,8 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci --force
-      - run: cd ./dist
+      - name: The final publish step within dist folder
+        working-directory: ./dist
       # This will publish the package and set access to public as if you had run npm access public after publishing.
       - run: npm publish --access public
         env:
