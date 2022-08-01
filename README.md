@@ -59,4 +59,16 @@ If you need to update `npm`, you can make it using `npm`!
 
 ## Simple build for production
 
-    npm run build
+    npm run bundle
+
+## Lint
+
+We use [ESlint](https://eslint.org/) to analyze and find problems. It has [integrations](https://eslint.org/docs/latest/user-guide/integrations) for various editors and other tools.
+
+- To find for problems
+
+      npm run lint
+
+- To fix problems
+
+      npm run fix
