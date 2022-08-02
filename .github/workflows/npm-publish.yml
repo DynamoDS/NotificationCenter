@@ -38,7 +38,7 @@ jobs:
           NODE_ENV: production
       - name: The final publish step within dist folder
         working-directory: dist
-      # This will publish the package and set access to public as if you had run npm access public after publishing.
+        # This will publish the package and set access to public as if you had run npm access public after publishing.
         run: npm publish --access public
         env:
           # Get npm token from Github

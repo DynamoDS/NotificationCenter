@@ -75,4 +75,4 @@ We use [ESlint](https://eslint.org/) to analyze and find problems. It has [integ
 
 - To fix problems
 
-      npm run fix
+      npm run lint:fix
