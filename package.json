@@ -14,11 +14,13 @@
   },
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src",
+    "fix": "eslint src --fix",
     "start": "webpack serve",
     "build": "webpack --config webpack.config.js --mode=development",
     "bundle": "webpack --config webpack.config.js --mode=production",
     "copy": "cp package.json dist/ && cp README.md dist/",
-    "production":"npm run bundle && npm run copy"
+    "production": "npm run bundle && npm run copy"
   },
   "keywords": [],
   "dependencies": {
@@ -35,6 +37,8 @@
     "babel-loader": "^8.2.5",
     "compression-webpack-plugin": "^10.0.0",
     "css-loader": "^6.7.1",
+    "eslint": "^8.21.0",
+    "eslint-plugin-react": "^7.30.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "sass": "^1.53.0",
