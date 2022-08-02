@@ -1,5 +1,9 @@
 # NotificationCenter
 
+[![License](https://img.shields.io/npm/l/@dynamods/notifications-center)](https://github.com/DynamoDS/NotificationCenter/blob/master/LICENSE)
+
+[![version](https://img.shields.io/npm/v/@dynamods/notifications-center?logo=npm&label=version)](https://www.npmjs.com/package/@dynamods/notifications-center)
+
 [![Build](https://github.com/DynamoDS/NotificationCenter/actions/workflows/build.yml/badge.svg)](https://github.com/DynamoDS/NotificationCenter/actions/workflows/build.yml)
 
 [![Publish](https://github.com/DynamoDS/NotificationCenter/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/DynamoDS/NotificationCenter/actions/workflows/npm-publish.yml)
@@ -16,7 +20,7 @@ For development, you will only need Node.js and a node global package, installed
 
 - #### Node installation on Windows
 
-  Just go on [official Node.js website](https://nodejs.org/) and download the installer. Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
+  Just go on [official Node.js website](https://nodejs.org/) and download the LTS installer. Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
 
 - #### Node installation on Ubuntu
 
@@ -47,7 +51,7 @@ If you need to update `npm`, you can make it using `npm`!
 
     git https://github.com/DynamoDS/NotificationCenter
     cd NotificationCenter
-    npm install
+    npm install --force
 
 ## Running the project
 
