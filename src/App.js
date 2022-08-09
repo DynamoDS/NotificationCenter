@@ -3,13 +3,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import NotificationsPanel from '@filipeop/notifications-panel';
 import Timestamp from '@hig/timestamp';
-import PropTypes from 'prop-types'
 
 function App() {
     let notificationData = [];
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
-        axios.get('http://demo9540080.mockable.io/notifications')
+        axios.get(process.env.NOTIFICATION_URL)
             .then((response) => {
                 setAPIData(response.data.notifications);
             });
