@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "eslint src __tests__",
     "lint:fix": "eslint src __tests__ --fix",
-    "test": "jest",
+    "test": "npm run lint:fix && jest",
     "start": "webpack serve",
     "build": "webpack --config webpack.config.js --mode=development",
     "bundle": "webpack --config webpack.config.js --mode=production",
