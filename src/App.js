@@ -1,8 +1,9 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import NotificationsFlyout, { anchorPoints } from '@hig/notifications-flyout';
+import NotificationsPanel from '@filipeop/notifications-panel';
 import Timestamp from '@hig/timestamp';
+import PropTypes from 'prop-types'
 
 function App() {
     let notificationData = [];
@@ -34,14 +35,11 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <NotificationsFlyout class="NotificationsFlyout"
-                heading="Notifications"
-                indicatorTitle="View application alerts"
-                anchorPoint={anchorPoints.TOP_LEFT}
-                notifications={notificationData}>
-            </NotificationsFlyout>
-        </div>
+        <NotificationsPanel class="NotificationsFlyout"
+            heading="Notifications"
+            indicatorTitle="View application alerts"
+            notifications={notificationData}>
+        </NotificationsPanel>
     );
 }
 
