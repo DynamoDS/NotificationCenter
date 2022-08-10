@@ -69,10 +69,19 @@ If you need to update `npm`, you can make it using `npm`!
 
 We use [ESlint](https://eslint.org/) to analyze and find problems. It has [integrations](https://eslint.org/docs/latest/user-guide/integrations) for various editors and other tools.
 
-- To find for problems
+- To find problems
 
       npm run lint
 
 - To fix problems
 
-      npm run fix
+      npm run lint:fix
+
+## Test
+
+We use [jest](https://jestjs.io/) to run our tests.
+
+- To run test.
+
+      npm run test
+  This script also runs `npm run lint:fix` script

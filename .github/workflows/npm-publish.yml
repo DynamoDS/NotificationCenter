@@ -20,6 +20,7 @@ jobs:
           node-version: 16
       - run: npm ci --force
       - run: npm run build --if-present
+      - run: npm test
 
   # Build prod bundle and publish publicly
   publish-npm:
@@ -33,12 +34,13 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci --force
       - run: npm run production --if-present
+      - run: npm test
         env:
           # Set environment to production just in case
           NODE_ENV: production
       - name: The final publish step within dist folder
         working-directory: dist
-      # This will publish the package and set access to public as if you had run npm access public after publishing.
+        # This will publish the package and set access to public as if you had run npm access public after publishing.
         run: npm publish --access public
         env:
           # Get npm token from Github

@@ -10,6 +10,7 @@ _SpecRunner.html
 __benchmarks__
 build/
 remote-repo/
+reports/
 coverage/
 .module-cache
 fixtures/dom/public/react-dom.js
