@@ -4,7 +4,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = env => {
     return {
-        mode: 'none',
+        mode: 'development',
         entry: {
             app: './src/index.js',
         },
