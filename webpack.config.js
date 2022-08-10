@@ -45,7 +45,7 @@ module.exports = env => {
         },
         plugins: [
             new Dotenv({
-              path: `./config/.env${env.file ? `.${env.file}` : ''}`
+              path: `./config/.env${env.dev ? `.dev` : ''}`
             })
         ]
     }

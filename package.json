@@ -17,7 +17,7 @@
     "lint": "eslint src",
     "fix": "eslint src --fix",
     "start": "webpack serve",
-    "build": "webpack --config webpack.config.js --mode=development",
+    "build": "webpack --config webpack.config.js --env dev --mode=development",
     "bundle": "webpack --config webpack.config.js --mode=production",
     "copy": "cp package.json dist/ && cp README.md dist/",
     "production": "npm run bundle && npm run copy"
