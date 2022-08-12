@@ -5,38 +5,40 @@ import NotificationsPanel from '@filipeop/notifications-panel';
 import Timestamp from '@hig/timestamp';
 
 function App() {
-  let notificationData = [];
-  const [APIData, setAPIData] = useState([]);
+  const [APIData, setAPIData] = useState(false);
   useEffect(() => {
     axios.get('http://demo9540080.mockable.io/notifications')
       .then((response) => {
-        setAPIData(response.data.notifications);
+        const notifications = response.data.notifications;
+        let notificationData = [];
+
+        for (let i = 0; i < notifications.length; i++) {
+          var notificationItem = {
+            id: notifications[i].id,
+            featured: true,
+            unread: true,
+            image: <img width={40} src={notifications[i].thumbnail}></img>,
+            message: notifications[i].title,
+            href: notifications[i].linkTitle,
+            timestamp: <Timestamp timestamp={notifications[i].created} />,
+            content: <div>                
+              <b>{notifications[i].title}</b>
+              <p>{notifications[i].longDescription}</p>
+              <a href={notifications[i].link}>{notifications[i].linkTitle}</a>
+            </div>
+          };
+          notificationData.push(notificationItem);
+        }
+
+        setAPIData(notificationData);
       });
   }, []);
 
-  for (let i = 0; i < APIData.length; i++) {
-    var notificationItem = {
-      id: APIData[i].id,
-      featured: true,
-      unread: true,
-      image: <img width={40} src={APIData[i].thumbnail}></img>,
-      message: APIData[i].title,
-      href: APIData[i].linkTitle,
-      timestamp: <Timestamp timestamp={APIData[i].created} />,
-      content: <div>                
-        <b>{APIData[i].title}</b>
-        <p>{APIData[i].longDescription}</p>
-        <a href={APIData[i].link}>{APIData[i].linkTitle}</a>
-      </div>
-    };
-    notificationData.push(notificationItem);
-  }
-
-  return notificationData.length ?
+  return APIData ?
   <NotificationsPanel class="NotificationsFlyout"
       heading="Notifications"
       indicatorTitle="View application alerts"
-      notifications={notificationData}>
+      notifications={APIData}>
   </NotificationsPanel>
   : null;
 }
