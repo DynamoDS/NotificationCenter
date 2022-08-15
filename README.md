@@ -53,6 +53,10 @@ If you need to update `npm`, you can make it using `npm`!
     cd NotificationCenter
     npm install --force
 
+    Note:
+    Make sure that you have correct endpoint set inside `config/.env` file:
+    You case this URL for dev notifications: https://d2xm4bcf3at21r.cloudfront.net/dynNotifications.json
+
 ## Running the project
 
     npm run start
