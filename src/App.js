@@ -11,7 +11,8 @@ function App() {
   }, []);
   
   const RequestNotifications = (url) => {
-    axios.get(url)
+    let getURL = url || process.env.NOTIFICATION_URL;
+    axios.get(getURL)
     .then((response) => {
       const notifications = response.data.notifications;
       let notificationData = [];
