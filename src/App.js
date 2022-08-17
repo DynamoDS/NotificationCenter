@@ -30,7 +30,7 @@ function App() {
             content: <div>
               <b>{notifications[i].title}</b>
               <p>{notifications[i].longDescription}</p>
-              <a href={notifications[i].link}>{notifications[i].linkTitle}</a>
+              <a href={notifications[i].link} target="_blank">{notifications[i].linkTitle}</a>
             </div>
           };
           notificationData.push(notificationItem);
