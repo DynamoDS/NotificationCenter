@@ -4,13 +4,21 @@
  */
 
 module.exports = {
-  collectCoverage: true,
-  collectCoverageFrom:  ['src/**/*.{js,jsx}'],
-  coverageDirectory: '<rootDir>/reports/coverage',
-  moduleNameMapper: {
-    '\\.(jpg|jpeg|png|gif)$': '<rootDir>/tests/__mocks__/fileMock.js',
-    '\\.(css|less)$': '<rootDir>/tests/__mocks__/styleMock.js',
-  },
+  projects: [
+    {
+      displayName: 'Unit Tests',
+      testMatch: ['<rootDir>/tests/unit/*.test.js'],
+      moduleNameMapper: {
+        '\\.(jpg|jpeg|png|gif)$': '<rootDir>/tests/unit/__mocks__/fileMock.js',
+        '\\.(css|less)$': '<rootDir>/tests/unit/__mocks__/styleMock.js',
+      },
+    },
+    {
+      displayName: 'E2E Tests',
+      testMatch: ['<rootDir>/tests/e2e/*.test.js'],
+      preset: 'jest-puppeteer',
+    }
+  ],
   reporters: [
     'default',
     [
@@ -23,4 +31,7 @@ module.exports = {
       },
     ],
   ],
+  collectCoverage: true,
+  collectCoverageFrom: ['<rootDir>/src/**/*.{js,jsx}'],
+  coverageDirectory: '<rootDir>/reports/coverage',
 };

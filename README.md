@@ -53,10 +53,6 @@ If you need to update `npm`, you can make it using `npm`!
     cd NotificationCenter
     npm install --force
 
-    Note:
-    Make sure that you have correct endpoint set inside `config/.env` file:
-    You case this URL for dev notifications: https://d2xm4bcf3at21r.cloudfront.net/dynNotifications.json
-
 ## Running the project
 
     npm run start
@@ -85,7 +81,15 @@ We use [ESlint](https://eslint.org/) to analyze and find problems. It has [integ
 
 We use [jest](https://jestjs.io/) to run our tests.
 
-- To run test.
+- To run unit test
+
+      npm run test:unit
+
+- To run e2e test
+
+      npm run test:e2e
+
+- To run all tests
 
       npm run test
   This script also runs `npm run lint:fix` script

@@ -10,42 +10,42 @@ function App() {
     window.RequestNotifications = RequestNotifications;
     RequestNotifications();
   }, []);
-  
+
   const RequestNotifications = (url) => {
     let getURL = url || process.env.NOTIFICATION_URL;
-    if(getURL){
+    if(getURL) {
       axios.get(getURL)
-      .then((response) => {
-        const notifications = response.data.notifications;
-        let notificationData = [];
-        for (let i = 0; i < notifications.length; i++) {
-          var notificationItem = {
-            id: notifications[i].id,
-            featured: true,
-            unread: true,
-            image: <img width={40} src={notifications[i].thumbnail}></img>,
-            message: notifications[i].title,
-            href: notifications[i].linkTitle,
-            timestamp: <Timestamp timestamp={notifications[i].created} />,
-            content: <div>
-              <b>{notifications[i].title}</b>
-              <p>{notifications[i].longDescription}</p>
-              <a href={notifications[i].link} target="_blank">{notifications[i].linkTitle}</a>
-            </div>
-          };
-          notificationData.push(notificationItem);
-        }
-        setAPIData(notificationData);
-      });
+        .then((response) => {
+          const notifications = response.data.notifications;
+          let notificationData = [];
+          for (let i = 0; i < notifications.length; i++) {
+            var notificationItem = {
+              id: notifications[i].id,
+              featured: true,
+              unread: true,
+              image: <img width={40} src={notifications[i].thumbnail}></img>,
+              message: notifications[i].title,
+              href: notifications[i].linkTitle,
+              timestamp: <Timestamp timestamp={notifications[i].created} />,
+              content: <div>
+                <b>{notifications[i].title}</b>
+                <p>{notifications[i].longDescription}</p>
+                <a href={notifications[i].link} target="_blank" rel="noreferrer">{notifications[i].linkTitle}</a>
+              </div>
+            };
+            notificationData.push(notificationItem);
+          }
+          setAPIData(notificationData);
+        });
     }
-  }
+  };
 
   return APIData ?
-  <NotificationsPanel class="NotificationsFlyout"
+    <NotificationsPanel class="NotificationsFlyout"
       heading="Notifications"
       indicatorTitle="View application alerts"
       notifications={APIData}>
-  </NotificationsPanel>
-  : null;
+    </NotificationsPanel>
+    : null;
 }
 export default App;
