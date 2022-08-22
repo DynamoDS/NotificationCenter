@@ -1,5 +1,4 @@
 import './App.css';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import NotificationsPanel from '@dynamods/notifications-panel';
 import Timestamp from '@hig/timestamp';
@@ -11,7 +10,6 @@ function App() {
   }, []);
 
   const setNotifications = (notifications) => {
-    console.log(notifications)
     let notificationsData = [];
     for (let i = 0; i < notifications.length; i++) {
       var notificationItem = {
