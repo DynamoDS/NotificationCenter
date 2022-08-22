@@ -1,6 +1,6 @@
 {
   "name": "@dynamods/notifications-center",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Notification center maintained by Dynamo Team@Autodesk",
   "author": "Autodesk Inc.",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "@babel/core": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-react": "^7.18.6",
-    "@filipeop/notifications-panel": "^0.0.2",
+    "@dynamods/notifications-panel": "^0.0.2",
     "@hig/timestamp": "^2.1.0",
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",

@@ -1,7 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import NotificationsPanel from '@filipeop/notifications-panel';
+import NotificationsPanel from '@dynamods/notifications-panel';
 import Timestamp from '@hig/timestamp';
 
 function App() {
