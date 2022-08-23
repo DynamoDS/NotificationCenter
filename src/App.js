@@ -2,14 +2,46 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import NotificationsPanel from '@dynamods/notifications-panel';
 import Timestamp from '@hig/timestamp';
+import axios from 'axios';
 
 function App() {
+
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [] });
+
+
   useEffect(() => {
-    window.setNotifications = setNotifications;
+
+    if (process.env.NOTIFICATION_URL) {
+      axios.get(process.env.NOTIFICATION_URL)
+        .then((response) => {
+
+          let notificationsData = parseNotifications(response.data.notifications);
+          setAPIData(() => {
+            return {
+              loaded: true,
+              notifications: notificationsData
+            }
+          });
+
+        });
+    }
+    else {
+      window.setNotifications = setNotifications;
+    }
+
   }, []);
 
   const setNotifications = (notifications) => {
+    let notificationsData = parseNotifications(notifications);
+    setAPIData(prevState => {
+      return {
+        loaded: true,
+        notifications: [...prevState.notifications, ...notificationsData]
+      }
+    });
+  }
+
+  function parseNotifications(notifications) {
     let notificationsData = [];
     for (let i = 0; i < notifications.length; i++) {
       var notificationItem = {
@@ -28,13 +60,9 @@ function App() {
       };
       notificationsData.push(notificationItem);
     }
-    setAPIData(prevState => {
-      return {
-        loaded: true,
-        notifications: [...prevState.notifications, ...notificationsData]
-      }
-    });
-  }
+    return notificationsData;
+  };
+
 
   return APIData.loaded ?
     <NotificationsPanel class="NotificationsFlyout"
