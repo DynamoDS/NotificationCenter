@@ -5,30 +5,23 @@ import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
 function App() {
-
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [] });
 
-
   useEffect(() => {
-
     if (process.env.NOTIFICATION_URL) {
       axios.get(process.env.NOTIFICATION_URL)
         .then((response) => {
-
           let notificationsData = parseNotifications(response.data.notifications);
           setAPIData(() => {
             return {
               loaded: true,
               notifications: notificationsData
-            }
+            };
           });
-
         });
-    }
-    else {
+    } else {
       window.setNotifications = setNotifications;
     }
-
   }, []);
 
   const setNotifications = (notifications) => {
@@ -37,11 +30,11 @@ function App() {
       return {
         loaded: true,
         notifications: [...prevState.notifications, ...notificationsData]
-      }
+      };
     });
-  }
+  };
 
-  function parseNotifications(notifications) {
+  const parseNotifications = (notifications) => {
     let notificationsData = [];
     for (let i = 0; i < notifications.length; i++) {
       var notificationItem = {
@@ -55,7 +48,7 @@ function App() {
         content: <div>
           <b>{notifications[i].title}</b>
           <p>{notifications[i].longDescription}</p>
-          <a href={notifications[i].link} target="_blank">{notifications[i].linkTitle}</a>
+          <a href={notifications[i].link} target="_blank" rel="noreferrer">{notifications[i].linkTitle}</a>
         </div>
       };
       notificationsData.push(notificationItem);
@@ -63,13 +56,13 @@ function App() {
     return notificationsData;
   };
 
-
   return APIData.loaded ?
-      <NotificationsPanel class="NotificationsFlyout"
+    <NotificationsPanel class="NotificationsFlyout"
       heading="Notifications"
       indicatorTitle="View application alerts"
       notifications={APIData.notifications}>
     </NotificationsPanel>
     : null;
 }
+
 export default App;

@@ -53,9 +53,16 @@ If you need to update `npm`, you can make it using `npm`!
     cd NotificationCenter
     npm install --force
 
+## Configuring endpoint
+
+In order to use notification endpoints, set them under appropriate files in [config](config) folder.
+
+- To use dev endpoint, set `NOTIFICATION_URL="https://d2xm4bcf3at21r.cloudfront.net/dynNotifications.json"` in [config/.env.dev](`config/.env.dev`)
+- To use production endpoint, set `NOTIFICATION_URL="https://ddehnr4ewobxc.cloudfront.net/dynNotifications.json"` in [config/.env](config/.env)
+
 ## Running the project
 
-    npm run start
+    npm run start:dev
 
 ## Simple build for development
 

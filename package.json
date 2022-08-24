@@ -1,6 +1,6 @@
 {
   "name": "@dynamods/notifications-center",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Notification center maintained by Dynamo Team@Autodesk",
   "author": "Autodesk Inc.",
   "license": "MIT",
@@ -19,10 +19,10 @@
     "test:unit": "jest tests/unit",
     "test:e2e": "jest tests/e2e --coverage=false",
     "test": "npm run lint:fix && jest",
-    "start": "webpack serve --config webpack.config.js --env dev",
-    "start:prod": "webpack serve --config webpack.config.js --env production",
-    "build": "webpack --config webpack.config.js --mode=development --env dev",
-    "bundle": "webpack --config webpack.config.js --mode=production --env production",
+    "start:dev": "webpack serve --config webpack.config.js --env dev",
+    "start:prod": "webpack serve --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --mode=development",
+    "bundle": "webpack --config webpack.config.js --mode=production",
     "copy": "cp package.json dist/ && cp README.md dist/",
     "production": "npm run bundle && npm run copy"
   },
