@@ -27,7 +27,7 @@
     "production": "npm run bundle && npm run copy",
     "lic_direct": "npx adsk-npm-license-puller --path . --app-name 'NotificationCenter' --verbose --about-box ./license_output/about-box_direct.html --about-box-type desktop --year 2022 --paos ./license_output/paos_direct.csv",
     "lic_transitive": "npx adsk-npm-license-puller --path . --app-name 'NotificationCenter' --verbose --about-box ./license_output/about-box_transitive.html --about-box-type desktop --transitive --year 2022 --paos ./license_output/paos_transitive.csv",
-    "generate_license":"npm run lic_direct && npm run lic_transitive"
+    "generate_license": "npm install @adsk/adsk-npm-license-puller --no-save --force && npm run lic_direct && npm run lic_transitive"
   },
   "keywords": [],
   "dependencies": {
@@ -35,7 +35,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@adsk/adsk-npm-license-puller": "^3.8.0",
     "@babel/core": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-react": "^7.18.6",
