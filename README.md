@@ -100,3 +100,6 @@ We use [jest](https://jestjs.io/) to run our tests.
 
       npm run test
   This script also runs `npm run lint:fix` script
+
+## Generate Third Party License Info
+* to generate about box html files use `npm run generate_license`, this will output alternative about box files to `license_output/` One will contain the full transitive production dep list, the other will contain the direct production deps.
