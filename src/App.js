@@ -39,7 +39,7 @@ function App() {
       var notificationItem = {
         id: notifications[i].id,
         featured: true,
-        unread: true,
+        unread: notifications[i].isUnread,
         image: <img width={40} src={notifications[i].thumbnail}></img>,
         message: notifications[i].title,
         href: notifications[i].linkTitle,
