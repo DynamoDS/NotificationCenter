@@ -1,21 +1,45 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import NotificationsPanel from '@filipeop/notifications-panel';
+import NotificationsPanel from '@dynamods/notifications-panel';
 import Timestamp from '@hig/timestamp';
+import axios from 'axios';
 
 function App() {
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [] });
   useEffect(() => {
-    window.setNotifications = setNotifications;
+    if (process.env.NOTIFICATION_URL) {
+      axios.get(process.env.NOTIFICATION_URL)
+        .then((response) => {
+          let notificationsData = parseNotifications(response.data.notifications);
+          setAPIData(() => {
+            return {
+              loaded: true,
+              notifications: notificationsData
+            };
+          });
+        });
+    } else {
+      window.setNotifications = setNotifications;
+    }
   }, []);
 
   const setNotifications = (notifications) => {
+    let notificationsData = parseNotifications(notifications);
+    setAPIData(prevState => {
+      return {
+        loaded: true,
+        notifications: [...prevState.notifications, ...notificationsData]
+      };
+    });
+  };
+
+  const parseNotifications = (notifications) => {
     let notificationsData = [];
     for (let i = 0; i < notifications.length; i++) {
       var notificationItem = {
         id: notifications[i].id,
-        featured: false,
-        unread: notifications[i].isUnread,
+        featured: true,
+        unread: true,
         image: <img width={40} src={notifications[i].thumbnail}></img>,
         message: notifications[i].title,
         href: notifications[i].linkTitle,
@@ -23,20 +47,13 @@ function App() {
         content: <div>
           <b>{notifications[i].title}</b>
           <p>{notifications[i].longDescription}</p>
-          <a href={notifications[i].link} target="_blank">{notifications[i].linkTitle}</a>
+          <a href={notifications[i].link} target="_blank" rel="noreferrer">{notifications[i].linkTitle}</a>
         </div>
       };
       notificationsData.push(notificationItem);
     }
-    setAPIData(prevState => {
-      return {
-        loaded: true,
-        notifications: [...prevState.notifications, ...notificationsData]
-      }
-    });
-
-
-  }
+    return notificationsData;
+  };
 
   const markAllAsRead = () => {
     let notificationsData = APIData.notifications;
@@ -66,4 +83,5 @@ function App() {
     </NotificationsPanel>
     : null;
 }
+
 export default App;

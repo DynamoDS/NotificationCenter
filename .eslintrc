@@ -26,5 +26,11 @@
     "indent": ["error", 2],
     "quotes": ["error", "single"],
     "semi": ["error", "always"]
+  },
+  "globals": {
+    "page": true,
+    "browser": true,
+    "context": true,
+    "jestPuppeteer": true
   }
 }
