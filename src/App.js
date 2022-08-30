@@ -6,7 +6,6 @@ import axios from 'axios';
 
 function App() {
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [] });
-
   useEffect(() => {
     if (process.env.NOTIFICATION_URL) {
       axios.get(process.env.NOTIFICATION_URL)
@@ -40,7 +39,7 @@ function App() {
       var notificationItem = {
         id: notifications[i].id,
         featured: true,
-        unread: true,
+        unread: !notifications[i].isRead,
         image: <img width={40} src={notifications[i].thumbnail}></img>,
         message: notifications[i].title,
         href: notifications[i].linkTitle,
@@ -56,10 +55,30 @@ function App() {
     return notificationsData;
   };
 
+  const markAllAsRead = () => {
+    let notificationsData = APIData.notifications;
+    for (let i = 0; i < notificationsData.length; i++) {
+      notificationsData[i].unread = false;
+    }
+
+    setAPIData(() => {
+      return {
+        loaded: true,
+        notifications: notificationsData
+      }
+    });
+
+    const readIds = notificationsData.map(x => x.id);
+    if (chrome.webview !== undefined) {
+      chrome.webview.hostObjects.scriptObject.SetNoficationsAsRead(readIds);
+    }
+  }
+
   return APIData.loaded ?
     <NotificationsPanel class="NotificationsFlyout"
       heading="Notifications"
       indicatorTitle="View application alerts"
+      onClickMarkAllAsRead={markAllAsRead}
       notifications={APIData.notifications}>
     </NotificationsPanel>
     : null;
