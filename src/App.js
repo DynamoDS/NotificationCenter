@@ -65,14 +65,14 @@ function App() {
       return {
         loaded: true,
         notifications: notificationsData
-      }
+      };
     });
 
     const readIds = notificationsData.map(x => x.id);
     if (chrome.webview !== undefined) {
       chrome.webview.hostObjects.scriptObject.SetNoficationsAsRead(readIds);
     }
-  }
+  };
 
   return APIData.loaded ?
     <NotificationsPanel class="NotificationsFlyout"
