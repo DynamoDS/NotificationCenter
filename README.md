@@ -78,7 +78,7 @@ We use [ESlint](https://eslint.org/) to analyze and find problems. It has [integ
 
 - To find problems
 
-      npm run lint
+      npm run lint:check
 
 - To fix problems
 
@@ -99,4 +99,4 @@ We use [jest](https://jestjs.io/) to run our tests.
 - To run all tests
 
       npm run test
-  This script also runs `npm run lint:fix` script
+  This script runs all tests along with lint.
