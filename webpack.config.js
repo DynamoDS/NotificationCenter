@@ -9,7 +9,7 @@ module.exports = (env) => {
       app: './src/index.js',
     },
     output: {
-      path: path.join(__dirname, '/dist/build'),
+      path: path.join(__dirname, '/dist'),
       filename: 'index.bundle.js',
       publicPath: '',
       clean: true,
@@ -45,7 +45,7 @@ module.exports = (env) => {
     },
     plugins: [
       new Dotenv({
-        path: `./config/.env${env.dev ? '.dev' : ''}`
+        path: `./config/.env${env.dev ? '.dev' : env.prod ? '.prod' : ''}`
       })
     ]
   };
