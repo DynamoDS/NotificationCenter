@@ -19,9 +19,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-env:
-  NOTIFICATION_URL: https://ddehnr4ewobxc.cloudfront.net/dynNotifications.json
-
 jobs:
   build:
     runs-on: ubuntu-latest
