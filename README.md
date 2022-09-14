@@ -78,7 +78,7 @@ We use [ESlint](https://eslint.org/) to analyze and find problems. It has [integ
 
 - To find problems
 
-      npm run lint
+      npm run lint:check
 
 - To fix problems
 
@@ -99,7 +99,8 @@ We use [jest](https://jestjs.io/) to run our tests.
 - To run all tests
 
       npm run test
-  This script also runs `npm run lint:fix` script
+  This script runs all tests along with lint.
 
 ## Generate Third Party License Info
 * to generate about box html files use `npm run generate_license`, this will output alternative about box files to `license_output/` One will contain the full transitive production dep list, the other will contain the direct production deps.
+* These files will be packed into the released npm package

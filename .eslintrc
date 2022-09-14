@@ -30,6 +30,7 @@
   "globals": {
     "page": true,
     "browser": true,
+    "chrome": true,
     "context": true,
     "jestPuppeteer": true
   }
