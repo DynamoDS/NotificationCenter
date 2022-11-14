@@ -82,7 +82,6 @@ function App() {
 
   const setTitle = (titleText) => {
     setAPIData( prevState => {
-      console.log( prevState.notificabottomButtonText);
       return {       
         loaded: prevState.loaded,
         notifications: prevState.notifications,
