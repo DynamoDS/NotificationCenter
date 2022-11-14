@@ -5,7 +5,7 @@ import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
 function App() {
-  const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: "Notifications", bottomButtonText: "Mark all as read" });
+  const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read' });
   useEffect(() => {
     if (process.env.NOTIFICATION_URL) {
       axios.get(process.env.NOTIFICATION_URL)
