@@ -5,7 +5,7 @@ import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
 function App() {
-  const [APIData, setAPIData] = useState({ loaded: false, notifications: [] });
+  const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read' });
   useEffect(() => {
     if (process.env.NOTIFICATION_URL) {
       axios.get(process.env.NOTIFICATION_URL)
@@ -20,6 +20,8 @@ function App() {
         });
     } else {
       window.setNotifications = setNotifications;
+      window.setTitle = setTitle;
+      window.setBottomButtonText = setBottomButtonText;
     }
   }, []);
 
@@ -28,7 +30,9 @@ function App() {
     setAPIData(prevState => {
       return {
         loaded: true,
-        notifications: [...prevState.notifications, ...notificationsData]
+        notifications: [...prevState.notifications, ...notificationsData],
+        title: prevState.title,
+        bottomButtonText: prevState.bottomButtonText
       };
     });
   };
@@ -64,7 +68,9 @@ function App() {
     setAPIData(() => {
       return {
         loaded: true,
-        notifications: notificationsData
+        notifications: notificationsData,
+        title: APIData.title,
+        bottomButtonText: APIData.bottomButtonText
       };
     });
 
@@ -74,9 +80,32 @@ function App() {
     }
   };
 
+  const setTitle = (titleText) => {
+    setAPIData( prevState => {
+      return {
+        loaded: prevState.loaded,
+        notifications: prevState.notifications,
+        title: titleText,
+        bottomButtonText: prevState.bottomButtonText,
+      };
+    });
+  };
+
+  const setBottomButtonText = (buttonText) => {
+    setAPIData( prevState => {
+      return {
+        loaded: prevState.loaded,
+        notifications: prevState.notifications,
+        title: prevState.title,
+        bottomButtonText: buttonText,
+      };
+    });
+  };
+
   return APIData.loaded ?
     <NotificationsPanel class="NotificationsFlyout"
-      heading="Notifications"
+      heading={APIData.title}
+      markAllAsReadTitle={APIData.bottomButtonText}
       indicatorTitle="View application alerts"
       onClickMarkAllAsRead={markAllAsRead}
       notifications={APIData.notifications}>
