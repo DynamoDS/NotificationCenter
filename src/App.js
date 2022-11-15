@@ -82,12 +82,12 @@ function App() {
 
   const setTitle = (titleText) => {
     setAPIData( prevState => {
-      return {       
+      return {
         loaded: prevState.loaded,
         notifications: prevState.notifications,
         title: titleText,
         bottomButtonText: prevState.bottomButtonText,
-      };             
+      };
     });
   };
 
@@ -98,7 +98,7 @@ function App() {
         notifications: prevState.notifications,
         title: prevState.title,
         bottomButtonText: buttonText,
-      };             
+      };
     });
   };
 
