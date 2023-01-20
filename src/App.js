@@ -1,3 +1,4 @@
+import '@hig/fonts/build/ArtifaktElement.css';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import NotificationsPanel from '@dynamods/notifications-panel';
