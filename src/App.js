@@ -2,6 +2,7 @@ import '@hig/fonts/build/ArtifaktElement.css';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import NotificationsPanel from '@dynamods/notifications-panel';
+import { EmptyStateArchiver } from "./icons";
 import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
@@ -23,10 +24,22 @@ function App() {
       window.setNotifications = setNotifications;
       window.setTitle = setTitle;
       window.setBottomButtonText = setBottomButtonText;
+      window.setPopupHeight = setPopupHeight;
     }
   }, []);
 
+  const setPopupHeight = () => {
+    console.log("RESIZE: ", document.body.scrollHeight);
+    if (!chrome.webview) return;
+    chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
+  }
+
+  useEffect(()=> {
+    setPopupHeight();
+  }, [])
+
   const setNotifications = (notifications) => {
+    // console.log("setNOTIFICATIONS", notifications);
     let notificationsData = parseNotifications(notifications);
     setAPIData(prevState => {
       return {
@@ -38,7 +51,14 @@ function App() {
     });
   };
 
+  const getNotificationsCount = notifications => {
+    console.log("NOTIFICATIONS_COUNT: ", notifications);
+    setPopupHeight();
+    return notifications;
+  };
+
   const parseNotifications = (notifications) => {
+    console.log("parseNotifications", notifications);
     let notificationsData = [];
     for (let i = 0; i < notifications.length; i++) {
       var notificationItem = {
@@ -102,15 +122,17 @@ function App() {
       };             
     });
   };
-
+  
   return APIData.loaded ?
     <NotificationsPanel class="NotificationsFlyout"
       heading={APIData.title}
       markAllAsReadTitle={APIData.bottomButtonText}
       indicatorTitle="View application alerts"
       onClickMarkAllAsRead={markAllAsRead}
-      notifications={APIData.notifications}>
-    </NotificationsPanel>
+      notifications={APIData.notifications}
+      emptyImage={<EmptyStateArchiver />}
+      getNotificationsCount={getNotificationsCount}
+      />
     : null;
 }
 
