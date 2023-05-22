@@ -1,6 +1,7 @@
 import '@hig/fonts/build/ArtifaktElement.css';
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import { useReRender } from './hooks';
 import NotificationsPanel from '@dynamods/notifications-panel';
 import { EmptyStateArchiver } from './icons';
 import Timestamp from '@hig/timestamp';
@@ -8,7 +9,7 @@ import axios from 'axios';
 
 function App() {
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read' });
-  const [componentIsLoaded, setComponentIsLoaded] = useState(false);
+  const forceRender = useReRender();
 
   useEffect(() => {
     if (process.env.NOTIFICATION_URL) {
@@ -31,9 +32,8 @@ function App() {
   }, []);
 
   const setPopupHeight = () => {
-    if (chrome.webview !== undefined) {
-      chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
-    }
+    if(chrome.webview === undefined) return;
+    chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
   };
 
   useEffect(()=> {
@@ -53,7 +53,7 @@ function App() {
   };
 
   const notificationChanged = () => {
-    setComponentIsLoaded(prevState=> !prevState);
+    forceRender();
   };
 
   const parseNotifications = (notifications) => {
