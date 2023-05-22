@@ -2,12 +2,14 @@ import '@hig/fonts/build/ArtifaktElement.css';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import NotificationsPanel from '@dynamods/notifications-panel';
-import { EmptyStateArchiver } from "./icons";
+import { EmptyStateArchiver } from './icons';
 import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
 function App() {
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read' });
+  const [componentIsLoaded, setComponentIsLoaded] = useState(false);
+
   useEffect(() => {
     if (process.env.NOTIFICATION_URL) {
       axios.get(process.env.NOTIFICATION_URL)
@@ -29,17 +31,16 @@ function App() {
   }, []);
 
   const setPopupHeight = () => {
-    console.log("RESIZE: ", document.body.scrollHeight);
-    if (!chrome.webview) return;
-    chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
-  }
+    if (chrome.webview !== undefined) {
+      chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
+    }
+  };
 
   useEffect(()=> {
     setPopupHeight();
-  }, [])
+  });
 
   const setNotifications = (notifications) => {
-    // console.log("setNOTIFICATIONS", notifications);
     let notificationsData = parseNotifications(notifications);
     setAPIData(prevState => {
       return {
@@ -51,14 +52,11 @@ function App() {
     });
   };
 
-  const getNotificationsCount = notifications => {
-    console.log("NOTIFICATIONS_COUNT: ", notifications);
-    setPopupHeight();
-    return notifications;
+  const notificationChanged = () => {
+    setComponentIsLoaded(prevState=> !prevState);
   };
 
   const parseNotifications = (notifications) => {
-    console.log("parseNotifications", notifications);
     let notificationsData = [];
     for (let i = 0; i < notifications.length; i++) {
       var notificationItem = {
@@ -131,8 +129,10 @@ function App() {
       onClickMarkAllAsRead={markAllAsRead}
       notifications={APIData.notifications}
       emptyImage={<EmptyStateArchiver />}
-      getNotificationsCount={getNotificationsCount}
-      />
+      emptyTitle={'No notifications'}
+      emptyMessage={'You currently have no notifications. New notifications will appear above'}
+      onNotificationChanged={notificationChanged}
+    />
     : null;
 }
 
