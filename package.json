@@ -38,7 +38,7 @@
     "@babel/core": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-react": "^7.18.6",
-    "@dynamods/notifications-panel": "^0.0.3",
+    "@dynamods/notifications-panel": "^0.0.4",
     "@hig/timestamp": "^2.1.0",
     "@hig/fonts": "^2.0.0",
     "axios": "^0.27.2",
