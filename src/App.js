@@ -1,12 +1,16 @@
 import '@hig/fonts/build/ArtifaktElement.css';
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import { useReRender } from './hooks';
 import NotificationsPanel from '@dynamods/notifications-panel';
+import { EmptyStateArchiver } from './icons';
 import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
 function App() {
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read' });
+  const forceRender = useReRender();
+
   useEffect(() => {
     if (process.env.NOTIFICATION_URL) {
       axios.get(process.env.NOTIFICATION_URL)
@@ -23,8 +27,18 @@ function App() {
       window.setNotifications = setNotifications;
       window.setTitle = setTitle;
       window.setBottomButtonText = setBottomButtonText;
+      window.setPopupHeight = setPopupHeight;
     }
   }, []);
+
+  const setPopupHeight = () => {
+    if(chrome.webview === undefined) return;
+    chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
+  };
+
+  useEffect(()=> {
+    setPopupHeight();
+  });
 
   const setNotifications = (notifications) => {
     let notificationsData = parseNotifications(notifications);
@@ -36,6 +50,10 @@ function App() {
         bottomButtonText: prevState.bottomButtonText
       };
     });
+  };
+
+  const notificationChanged = () => {
+    forceRender();
   };
 
   const parseNotifications = (notifications) => {
@@ -102,15 +120,19 @@ function App() {
       };             
     });
   };
-
+  
   return APIData.loaded ?
     <NotificationsPanel class="NotificationsFlyout"
       heading={APIData.title}
       markAllAsReadTitle={APIData.bottomButtonText}
       indicatorTitle="View application alerts"
       onClickMarkAllAsRead={markAllAsRead}
-      notifications={APIData.notifications}>
-    </NotificationsPanel>
+      notifications={APIData.notifications}
+      emptyImage={<EmptyStateArchiver />}
+      emptyTitle={'No notifications'}
+      emptyMessage={'You currently have no notifications. New notifications will appear above'}
+      onNotificationChanged={notificationChanged}
+    />
     : null;
 }
 
