@@ -10,7 +10,8 @@
     "url": "git+https://github.com/DynamoDS/NotificationCenter.git"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "main": "index.js",
   "scripts": {
