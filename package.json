@@ -1,6 +1,6 @@
 {
   "name": "@dynamods/notifications-center",
-  "version": "0.0.21",
+  "version": "0.0.23",
   "description": "Notification center maintained by Dynamo Team@Autodesk",
   "author": "Autodesk Inc.",
   "license": "MIT",
@@ -10,8 +10,7 @@
     "url": "git+https://github.com/DynamoDS/NotificationCenter.git"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "access": "public"
   },
   "main": "index.js",
   "scripts": {
@@ -70,3 +69,4 @@
     "url": "https://github.com/DynamoDS/NotificationCenter/issues"
   }
 }
+
