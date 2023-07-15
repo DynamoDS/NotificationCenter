@@ -45,7 +45,7 @@ function App() {
     setAPIData(prevState => {
       return {
         loaded: true,
-        notifications: [...prevState.notifications, ...notificationsData],
+        notifications: notificationsData,
         title: prevState.title,
         bottomButtonText: prevState.bottomButtonText
       };
@@ -78,42 +78,17 @@ function App() {
     return notificationsData;
   };
 
-
-  // const markAllAsRead = () => {
-  //   console.log("APIData.notifications", APIData);
-  //   let notificationsData = APIData.notifications;
-  //   for (let i = 0; i < notificationsData.length; i++) {
-  //     notificationsData[i].unread = false;
-  //   }
-
-  //   setAPIData(() => {
-  //     return {
-  //       loaded: true,
-  //       notifications: notificationsData,
-  //       title: APIData.title,
-  //       bottomButtonText: APIData.bottomButtonText
-  //     };
-  //   });
-
-  //   const readIds = notificationsData.map(x => x.id);
-  //   if (chrome.webview !== undefined) {
-  //     chrome.webview.hostObjects.scriptObject.SetNoficationsAsRead(readIds);
-  //   }
-  // };
-
   // This function should receive an array of notifications [N] [1,2,3 ... 4]
-  const markAllAsRead = (...markedNotifications) => {
-    console.log("MARK_AS_READ_Ids", markedNotifications)
+  const markAsRead = (markedNotifications) => {
+    if (!Array.isArray(markedNotifications)) markedNotifications = [markedNotifications];
 
     const updatedNotifications = APIData.notifications.map(notification => {
-      if(!markedNotifications.includes(notification)) return notification;
+      if(!markedNotifications.includes(notification.id)) return notification;
       return {
         ...notification,
         unread: false
       }
     });
-
-    console.log("updatedNotifications", updatedNotifications);
 
     setAPIData(prevState => {
       return {
@@ -127,8 +102,6 @@ function App() {
     );
 
     const readNotificationsIDs = readNotifications.map(notification => notification.id);
-
-    console.log("notification", readNotificationsIDs);
 
     if (chrome.webview === undefined) return;
     chrome.webview.hostObjects.scriptObject.SetNoficationsAsRead(readNotificationsIDs);
@@ -161,8 +134,7 @@ function App() {
       heading={APIData.title}
       markAllAsReadTitle={APIData.bottomButtonText}
       indicatorTitle="View application alerts"
-      onClickMarkAllAsRead={markAllAsRead}
-      onMarkAsRead={markAllAsRead}
+      markAsRead={markAsRead}
       notifications={APIData.notifications}
       emptyImage={<EmptyStateArchiver />}
       emptyTitle={'No notifications'}
