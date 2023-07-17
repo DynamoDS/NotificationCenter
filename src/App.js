@@ -23,20 +23,20 @@ function App() {
             };
           });
         });
-    } else {
+    }else {
       window.setNotifications = setNotifications;
       window.setTitle = setTitle;
       window.setBottomButtonText = setBottomButtonText;
       window.setPopupHeight = setPopupHeight;
     }
-  }, []);
+  },[]);
 
   const setPopupHeight = () => {
     if(chrome.webview === undefined) return;
     chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     setPopupHeight();
   });
 
@@ -45,7 +45,7 @@ function App() {
     setAPIData(prevState => {
       return {
         loaded: true,
-        notifications: [...prevState.notifications, ...notificationsData],
+        notifications: notificationsData,
         title: prevState.title,
         bottomButtonText: prevState.bottomButtonText
       };
@@ -78,55 +78,61 @@ function App() {
     return notificationsData;
   };
 
-  const markAllAsRead = () => {
-    let notificationsData = APIData.notifications;
-    for (let i = 0; i < notificationsData.length; i++) {
-      notificationsData[i].unread = false;
-    }
+  //This function should receive an array of notifications [N] [1,2,3 ... 4]
+  const markAsRead = (markedNotifications) => {
+    if (!Array.isArray(markedNotifications)) markedNotifications = [markedNotifications];
 
-    setAPIData(() => {
+    const updatedNotifications = APIData.notifications.map(notification => {
+      if(!markedNotifications.includes(notification.id)) return notification;
       return {
-        loaded: true,
-        notifications: notificationsData,
-        title: APIData.title,
-        bottomButtonText: APIData.bottomButtonText
+        ...notification,
+        unread: false
       };
     });
 
-    const readIds = notificationsData.map(x => x.id);
-    if (chrome.webview !== undefined) {
-      chrome.webview.hostObjects.scriptObject.SetNoficationsAsRead(readIds);
-    }
+    setAPIData(prevState => {
+      return {
+        ...prevState,
+        notifications: updatedNotifications
+      };
+    });
+
+    const readNotifications = APIData.notifications.filter( notification => notification.unread !== false);
+    const readNotificationsIDs = readNotifications.map(notification => notification.id);
+
+    if(chrome.webview === undefined) return;
+    chrome.webview.hostObjects.scriptObject.SetNotificationsAsRead(readNotificationsIDs);
   };
 
   const setTitle = (titleText) => {
-    setAPIData( prevState => {
+    setAPIData(prevState => {
       return {       
         loaded: prevState.loaded,
         notifications: prevState.notifications,
         title: titleText,
-        bottomButtonText: prevState.bottomButtonText,
+        bottomButtonText: prevState.bottomButtonText
       };             
     });
   };
 
   const setBottomButtonText = (buttonText) => {
-    setAPIData( prevState => {
+    setAPIData(prevState => {
       return {
         loaded: prevState.loaded,
         notifications: prevState.notifications,
         title: prevState.title,
-        bottomButtonText: buttonText,
+        bottomButtonText: buttonText
       };             
     });
   };
   
-  return APIData.loaded ?
-    <NotificationsPanel class="NotificationsFlyout"
+  return APIData.loaded ? 
+    <NotificationsPanel 
+      class="NotificationsFlyout"
       heading={APIData.title}
       markAllAsReadTitle={APIData.bottomButtonText}
       indicatorTitle="View application alerts"
-      onClickMarkAllAsRead={markAllAsRead}
+      markAsRead={markAsRead}
       notifications={APIData.notifications}
       emptyImage={<EmptyStateArchiver />}
       emptyTitle={'No notifications'}
