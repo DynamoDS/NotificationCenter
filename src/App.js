@@ -23,20 +23,20 @@ function App() {
             };
           });
         });
-      } else {
-        window.setNotifications = setNotifications;
-        window.setTitle = setTitle;
-        window.setBottomButtonText = setBottomButtonText;
-        window.setPopupHeight = setPopupHeight;
-      }
-    }, []);
+    }else {
+      window.setNotifications = setNotifications;
+      window.setTitle = setTitle;
+      window.setBottomButtonText = setBottomButtonText;
+      window.setPopupHeight = setPopupHeight;
+    }
+  },[]);
 
   const setPopupHeight = () => {
     if(chrome.webview === undefined) return;
     chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     setPopupHeight();
   });
 
@@ -78,7 +78,7 @@ function App() {
     return notificationsData;
   };
 
-  // This function should receive an array of notifications [N] [1,2,3 ... 4]
+  //This function should receive an array of notifications [N] [1,2,3 ... 4]
   const markAsRead = (markedNotifications) => {
     if (!Array.isArray(markedNotifications)) markedNotifications = [markedNotifications];
 
@@ -87,50 +87,48 @@ function App() {
       return {
         ...notification,
         unread: false
-      }
+      };
     });
 
     setAPIData(prevState => {
       return {
         ...prevState,
         notifications: updatedNotifications
-      }
+      };
     });
 
-    const readNotifications = APIData.notifications.filter(
-      notification => notification.unread !== false
-    );
-
+    const readNotifications = APIData.notifications.filter( notification => notification.unread !== false);
     const readNotificationsIDs = readNotifications.map(notification => notification.id);
 
-    if (chrome.webview === undefined) return;
-    chrome.webview.hostObjects.scriptObject.SetNoficationsAsRead(readNotificationsIDs);
-  }
+    if(chrome.webview === undefined) return;
+    chrome.webview.hostObjects.scriptObject.SetNotificationsAsRead(readNotificationsIDs);
+  };
 
   const setTitle = (titleText) => {
-    setAPIData( prevState => {
+    setAPIData(prevState => {
       return {       
         loaded: prevState.loaded,
         notifications: prevState.notifications,
         title: titleText,
-        bottomButtonText: prevState.bottomButtonText,
+        bottomButtonText: prevState.bottomButtonText
       };             
     });
   };
 
   const setBottomButtonText = (buttonText) => {
-    setAPIData( prevState => {
+    setAPIData(prevState => {
       return {
         loaded: prevState.loaded,
         notifications: prevState.notifications,
         title: prevState.title,
-        bottomButtonText: buttonText,
+        bottomButtonText: buttonText
       };             
     });
   };
   
-  return APIData.loaded ?
-    <NotificationsPanel class="NotificationsFlyout"
+  return APIData.loaded ? 
+    <NotificationsPanel 
+      class="NotificationsFlyout"
       heading={APIData.title}
       markAllAsReadTitle={APIData.bottomButtonText}
       indicatorTitle="View application alerts"
