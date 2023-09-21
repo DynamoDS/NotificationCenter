@@ -23,7 +23,7 @@ function App() {
             };
           });
         });
-    }else {
+    } else {
       window.setNotifications = setNotifications;
       window.setTitle = setTitle;
       window.setBottomButtonText = setBottomButtonText;
@@ -106,12 +106,12 @@ function App() {
 
   const setTitle = (titleText) => {
     setAPIData(prevState => {
-      return {       
+      return {
         loaded: prevState.loaded,
         notifications: prevState.notifications,
         title: titleText,
         bottomButtonText: prevState.bottomButtonText
-      };             
+      };
     });
   };
 
@@ -122,12 +122,12 @@ function App() {
         notifications: prevState.notifications,
         title: prevState.title,
         bottomButtonText: buttonText
-      };             
+      };
     });
   };
-  
-  return APIData.loaded ? 
-    <NotificationsPanel 
+
+  return APIData.loaded ?
+    <NotificationsPanel
       class="NotificationsFlyout"
       heading={APIData.title}
       markAllAsReadTitle={APIData.bottomButtonText}
