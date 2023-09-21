@@ -1,11 +1,16 @@
+import '@hig/fonts/build/ArtifaktElement.css';
 import './App.css';
 import React, { useEffect, useState } from 'react';
+import { useReRender } from './hooks';
 import NotificationsPanel from '@dynamods/notifications-panel';
+import { EmptyStateArchiver } from './icons';
 import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
 function App() {
   const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read' });
+  const forceRender = useReRender();
+
   useEffect(() => {
     if (process.env.NOTIFICATION_URL) {
       axios.get(process.env.NOTIFICATION_URL)
@@ -18,23 +23,37 @@ function App() {
             };
           });
         });
-    } else {
+    }else {
       window.setNotifications = setNotifications;
       window.setTitle = setTitle;
       window.setBottomButtonText = setBottomButtonText;
+      window.setPopupHeight = setPopupHeight;
     }
-  }, []);
+  },[]);
+
+  const setPopupHeight = () => {
+    if(chrome.webview === undefined) return;
+    chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
+  };
+
+  useEffect(() => {
+    setPopupHeight();
+  });
 
   const setNotifications = (notifications) => {
     let notificationsData = parseNotifications(notifications);
     setAPIData(prevState => {
       return {
         loaded: true,
-        notifications: [...prevState.notifications, ...notificationsData],
+        notifications: notificationsData,
         title: prevState.title,
         bottomButtonText: prevState.bottomButtonText
       };
     });
+  };
+
+  const notificationChanged = () => {
+    forceRender();
   };
 
   const parseNotifications = (notifications) => {
@@ -59,25 +78,30 @@ function App() {
     return notificationsData;
   };
 
-  const markAllAsRead = () => {
-    let notificationsData = APIData.notifications;
-    for (let i = 0; i < notificationsData.length; i++) {
-      notificationsData[i].unread = false;
-    }
+  //This function should receive an array of notifications [N] [1,2,3 ... 4]
+  const markAsRead = (markedNotifications) => {
+    if (!Array.isArray(markedNotifications)) markedNotifications = [markedNotifications];
 
-    setAPIData(() => {
+    const updatedNotifications = APIData.notifications.map(notification => {
+      if(!markedNotifications.includes(notification.id)) return notification;
       return {
-        loaded: true,
-        notifications: notificationsData,
-        title: APIData.title,
-        bottomButtonText: APIData.bottomButtonText
+        ...notification,
+        unread: false
       };
     });
 
-    const readIds = notificationsData.map(x => x.id);
-    if (chrome.webview !== undefined) {
-      chrome.webview.hostObjects.scriptObject.SetNoficationsAsRead(readIds);
-    }
+    setAPIData(prevState => {
+      return {
+        ...prevState,
+        notifications: updatedNotifications
+      };
+    });
+
+    const readNotifications = APIData.notifications.filter( notification => notification.unread !== false);
+    const readNotificationsIDs = readNotifications.map(notification => notification.id);
+
+    if(chrome.webview === undefined) return;
+    chrome.webview.hostObjects.scriptObject.SetNotificationsAsRead(readNotificationsIDs);
   };
 
   const setTitle = (titleText) => {
@@ -92,7 +116,7 @@ function App() {
   };
 
   const setBottomButtonText = (buttonText) => {
-    setAPIData( prevState => {
+    setAPIData(prevState => {
       return {
         loaded: prevState.loaded,
         notifications: prevState.notifications,
@@ -103,13 +127,18 @@ function App() {
   };
 
   return APIData.loaded ?
-    <NotificationsPanel class="NotificationsFlyout"
+    <NotificationsPanel
+      class="NotificationsFlyout"
       heading={APIData.title}
       markAllAsReadTitle={APIData.bottomButtonText}
       indicatorTitle="View application alerts"
-      onClickMarkAllAsRead={markAllAsRead}
-      notifications={APIData.notifications}>
-    </NotificationsPanel>
+      markAsRead={markAsRead}
+      notifications={APIData.notifications}
+      emptyImage={<EmptyStateArchiver />}
+      emptyTitle={'No notifications'}
+      emptyMessage={'You currently have no notifications. New notifications will appear above'}
+      onNotificationChanged={notificationChanged}
+    />
     : null;
 }
 

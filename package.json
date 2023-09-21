@@ -1,6 +1,6 @@
 {
   "name": "@dynamods/notifications-center",
-  "version": "0.0.21",
+  "version": "0.0.25",
   "description": "Notification center maintained by Dynamo Team@Autodesk",
   "author": "Autodesk Inc.",
   "license": "MIT",
@@ -43,8 +43,9 @@
     "@babel/core": "^7.18.6",
     "@babel/preset-env": "^7.18.6",
     "@babel/preset-react": "^7.18.6",
-    "@dynamods/notifications-panel": "^0.0.3",
+    "@dynamods/notifications-panel": "^0.0.8",
     "@hig/timestamp": "^2.1.0",
+    "@hig/fonts": "^2.0.0",
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
     "compression-webpack-plugin": "^10.0.0",
@@ -73,3 +74,4 @@
     "url": "https://github.com/DynamoDS/NotificationCenter/issues"
   }
 }
+
