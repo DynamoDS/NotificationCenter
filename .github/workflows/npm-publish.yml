@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci --force
-      - run: npm run build --if-present
+      - run: npm run build:dev --if-present
       - run: npm test
 
   # Build prod bundle and publish publicly
