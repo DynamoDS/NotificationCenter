@@ -105,3 +105,9 @@ npm run test        # To runs all tests along with lint
 
 - To generate about box html files use `npm run generate_license`, this will output alternative about box files to [license_output](license_output). One will contain the full transitive production dep list, the other will contain the direct production deps.
 - These files will be packed into the released npm package
+
+## Bump Version
+
+```shell
+npm run version:patch   # To bump patch version
+```
