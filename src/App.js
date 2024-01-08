@@ -31,15 +31,7 @@ function App() {
     }
   },[]);
 
-  const validateNotificationUrl = (url) => {
-    let parseURL = url;
-
-    if (!url.includes("//")){
-      parseURL = "http://" + url;
-    }
-    
-    return parseURL;
-  };
+  const validateNotificationUrl = (url) => !url.startsWith("https://") ? `https://${url}` : url;
 
   const setPopupHeight = () => {
     if(chrome.webview === undefined) return;
