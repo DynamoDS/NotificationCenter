@@ -31,6 +31,16 @@ function App() {
     }
   },[]);
 
+  const validateNotificationUrl = (url) => {
+    let parseURL = url;
+
+    if (!url.includes("//")){
+      parseURL = "http://" + url;
+    }
+    
+    return parseURL;
+  };
+
   const setPopupHeight = () => {
     if(chrome.webview === undefined) return;
     chrome.webview.hostObjects.scriptObject.UpdateNotificationWindowSize(document.body.scrollHeight);
@@ -70,7 +80,7 @@ function App() {
         content: <div>
           <b>{notifications[i].title}</b>
           <p>{notifications[i].longDescription}</p>
-          <a href={notifications[i].link} target="_blank" rel="noreferrer">{notifications[i].linkTitle}</a>
+          <a href={validateNotificationUrl(notifications[i].link)} target="_blank" rel="noreferrer">{notifications[i].linkTitle}</a>
         </div>
       };
       notificationsData.push(notificationItem);
