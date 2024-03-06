@@ -8,7 +8,8 @@ import Timestamp from '@hig/timestamp';
 import axios from 'axios';
 
 function App() {
-  const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read' });
+  const [APIData, setAPIData] = useState({ loaded: false, notifications: [], title: 'Notifications', bottomButtonText: 'Mark all as read',
+   noNotificationsTexts: { title:'', msg:''} });
   const forceRender = useReRender();
 
   useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
     } else {
       window.setNotifications = setNotifications;
       window.setTitle = setTitle;
+      window.setNoNotificationsTexts = setNoNotificationsTexts;
       window.setBottomButtonText = setBottomButtonText;
       window.setPopupHeight = setPopupHeight;
     }
@@ -46,10 +48,9 @@ function App() {
     let notificationsData = parseNotifications(notifications);
     setAPIData(prevState => {
       return {
+        ...prevState,
         loaded: true,
         notifications: notificationsData,
-        title: prevState.title,
-        bottomButtonText: prevState.bottomButtonText
       };
     });
   };
@@ -109,20 +110,25 @@ function App() {
   const setTitle = (titleText) => {
     setAPIData(prevState => {
       return {
-        loaded: prevState.loaded,
-        notifications: prevState.notifications,
-        title: titleText,
-        bottomButtonText: prevState.bottomButtonText
+        ...prevState,
+        title: titleText
       };
     });
   };
-
+  
+  const setNoNotificationsTexts = (texts) => {
+    setAPIData(prevState => {
+      return {
+        ...prevState,
+        noNotificationsTexts: JSON.parse(texts)
+      };
+    });
+  };
+  
   const setBottomButtonText = (buttonText) => {
     setAPIData(prevState => {
       return {
-        loaded: prevState.loaded,
-        notifications: prevState.notifications,
-        title: prevState.title,
+        ...prevState,
         bottomButtonText: buttonText
       };
     });
@@ -137,8 +143,8 @@ function App() {
       markAsRead={markAsRead}
       notifications={APIData.notifications}
       emptyImage={<EmptyStateArchiver />}
-      emptyTitle={'No notifications'}
-      emptyMessage={'You currently have no notifications. New notifications will appear above'}
+      emptyTitle={APIData.noNotificationsTexts.title}
+      emptyMessage={APIData.noNotificationsTexts.msg}
       onNotificationChanged={notificationChanged}
     />
     : null;
