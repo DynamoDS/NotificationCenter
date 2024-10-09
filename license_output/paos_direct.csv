@@ -1,4 +1,4 @@
 publisher,name,version,copyright,dateAdded,estimatedReleaseDate,license,distributed
-"Autodesk Inc.",@dynamods/notifications-center,"0.0.27","Copyright (c) 2023 DynamoDS","","",MIT,false
+"Autodesk Inc.",@dynamods/notifications-center,"0.0.31","Copyright (c) 2024 DynamoDS","","",MIT,false
 "",react-dom,"18.2.0","Copyright (c) Facebook, Inc. and its affiliates.","","",MIT,false
 "",react,"18.2.0","Copyright (c) Facebook, Inc. and its affiliates.","","",MIT,false
