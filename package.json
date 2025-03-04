@@ -18,7 +18,7 @@
     "lint:fix": "eslint src/ tests/ --fix",
     "test:unit": "jest tests/unit",
     "test:e2e": "jest tests/e2e --coverage=false",
-    "test": "jest",
+    "test": "jest --no-sandbox",
     "start:dev": "webpack serve --config webpack.config.js --env dev",
     "start:staging": "webpack serve --config webpack.config.js --env staging",
     "start": "webpack serve --config webpack.config.js --env prod",
