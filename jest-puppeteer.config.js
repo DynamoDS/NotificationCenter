@@ -7,6 +7,10 @@ module.exports = {
   launch: {
     headless: true,
     timeout: 30000,
+    args: [
+        `--no-sandbox`
+        `--disable-setuid-sandbox`
+      ],
   },
   exitOnPageError: false
 };
