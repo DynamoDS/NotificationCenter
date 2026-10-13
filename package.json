@@ -1,6 +1,6 @@
 {
   "name": "@dynamods/notifications-center",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Notification center maintained by Dynamo Team@Autodesk",
   "author": "Autodesk Inc.",
   "license": "MIT",
@@ -67,10 +67,14 @@
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
+    "terser-webpack-plugin": "^5.6.1",
     "webpack": "^5.101.0",
     "webpack-cli": "^7.2.3",
     "webpack-dev-server": "^6.0.0",
     "webpack-merge": "^5.8.0"
+  },
+  "overrides": {
+    "cheerio": "1.0.0-rc.12"
   },
   "bugs": {
     "url": "https://github.com/DynamoDS/NotificationCenter/issues"
